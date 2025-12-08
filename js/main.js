@@ -31,6 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
         'calculadora-bastidor': {
             title: 'Calculadora de Pano para Bastidor',
             content: getCalculadoraBastidorHTML()
+        },
+        'guia-pontos': {
+            title: 'Guia de Pontos Básicos',
+            content: getGuiaPontosHTML()
         }
     };
 
@@ -83,6 +87,11 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'calculadora-bastidor':
                 if (typeof initCalculadoraBastidor === 'function') {
                     initCalculadoraBastidor();
+                }
+                break;
+            case 'guia-pontos':
+                if (typeof initGuiaPontos === 'function') {
+                    initGuiaPontos();
                 }
                 break;
         }
@@ -299,6 +308,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 </button>
 
                 <div id="resultado-bastidor"></div>
+            </div>
+        `;
+    }
+
+    function getGuiaPontosHTML() {
+        return `
+            <div id="guia-pontos-container">
+                <div class="mb-4">
+                    <p class="text-muted">Selecione um ponto para ver as instruções detalhadas:</p>
+                    <select id="seletor-ponto" class="form-select mb-3">
+                        <option value="">Selecione um ponto...</option>
+                        <option value="ponto-atras">Ponto Atrás</option>
+                        <option value="ponto-cheio">Ponto Cheio</option>
+                        <option value="ponto-corrente">Ponto Corrente</option>
+                        <option value="ponto-haste">Ponto Haste</option>
+                        <option value="ponto-no-frances">Ponto Nó Francês</option>
+                        <option value="ponto-folha">Ponto Folha</option>
+                        <option value="ponto-margarida">Ponto Margarida</option>
+                        <option value="ponto-cruz">Ponto Cruz</option>
+                    </select>
+                </div>
+
+                <div id="conteudo-ponto"></div>
             </div>
         `;
     }
