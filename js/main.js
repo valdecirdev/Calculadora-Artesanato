@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
         'calculadora-tecido': {
             title: 'Calculadora de Tecido',
             content: getCalculadoraTecidoHTML()
+        },
+        'calculadora-bastidor': {
+            title: 'Calculadora de Pano para Bastidor',
+            content: getCalculadoraBastidorHTML()
         }
     };
 
@@ -74,6 +78,11 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'calculadora-tecido':
                 if (typeof initCalculadoraTecido === 'function') {
                     initCalculadoraTecido();
+                }
+                break;
+            case 'calculadora-bastidor':
+                if (typeof initCalculadoraBastidor === 'function') {
+                    initCalculadoraBastidor();
                 }
                 break;
         }
@@ -264,6 +273,36 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
+    function getCalculadoraBastidorHTML() {
+        return `
+            <div id="calculadora-bastidor-container">
+                <div class="mb-4">
+                    <h6 class="mb-3">Dimensões do Bastidor</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Diâmetro do bastidor (cm)</label>
+                        <input type="text" id="diametro-bastidor" class="form-control" step="0.01" min="0" placeholder="20,00" inputmode="decimal">
+                        <div class="form-text">O bastidor é redondo, então informe apenas o diâmetro</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="mb-3">Margem Necessária</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Margem de trabalho/acabamento (cm)</label>
+                        <input type="text" id="margem-trabalho-acabamento" class="form-control" step="0.01" min="0" placeholder="5,00" value="5,00" inputmode="decimal">
+                        <div class="form-text">Espaço extra necessário ao redor do bastidor para trabalhar durante o bordado e fazer o acabamento final</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="calcularBastidor()">
+                    <i class="fas fa-calculator me-2"></i>Calcular Tamanho do Pano
+                </button>
+
+                <div id="resultado-bastidor"></div>
+            </div>
+        `;
+    }
+
     // Configura todos os inputs de uma ferramenta para aceitar vírgula
     function configurarInputsBrasileiros(toolName) {
         const inputIds = {
@@ -271,7 +310,8 @@ document.addEventListener('DOMContentLoaded', function() {
             'custo-fio': ['tamanho-meada', 'quantidade-fios', 'preco-meada', 'comprimento-fio'],
             'conversor-medidas': ['valor-converter'],
             'calculadora-tempo': ['tempo-trabalho', 'valor-hora', 'quantidade-pecas'],
-            'calculadora-tecido': ['largura-tecido', 'altura-tecido', 'largura-peca', 'altura-peca', 'numero-camadas']
+            'calculadora-tecido': ['largura-tecido', 'altura-tecido', 'largura-peca', 'altura-peca', 'numero-camadas'],
+            'calculadora-bastidor': ['diametro-bastidor', 'margem-trabalho-acabamento']
         };
         
         const ids = inputIds[toolName] || [];
