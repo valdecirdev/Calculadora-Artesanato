@@ -1,0 +1,375 @@
+// Main JavaScript para módulo de Feltro
+
+const FeltroModule = {
+    tools: {},
+    
+    init: function() {
+        this.loadTools();
+        this.setupEventListeners();
+    },
+    
+    loadTools: function() {
+        this.tools = {
+            'precificacao': {
+                id: 'precificacao',
+                title: 'Calculadora de Precificação',
+                content: this.getPrecificacaoHTML(),
+                module: 'feltro'
+            },
+            'quantidade-feltro': {
+                id: 'quantidade-feltro',
+                title: 'Calculadora de Quantidade de Feltro',
+                content: this.getQuantidadeFeltroHTML(),
+                module: 'feltro'
+            },
+            'conversor-medidas': {
+                id: 'conversor-medidas',
+                title: 'Conversor de Medidas',
+                content: this.getConversorMedidasHTML(),
+                module: 'feltro'
+            },
+            'calculadora-tempo': {
+                id: 'calculadora-tempo',
+                title: 'Calculadora de Tempo',
+                content: this.getCalculadoraTempoHTML(),
+                module: 'feltro'
+            },
+            'calculadora-enchimento': {
+                id: 'calculadora-enchimento',
+                title: 'Calculadora de Enchimento',
+                content: this.getCalculadoraEnchimentoHTML(),
+                module: 'feltro'
+            },
+            'calculadora-padrao': {
+                id: 'calculadora-padrao',
+                title: 'Redimensionador de Padrões',
+                content: this.getCalculadoraPadraoHTML(),
+                module: 'feltro'
+            },
+            'guia-pontos-feltro': {
+                id: 'guia-pontos-feltro',
+                title: 'Guia de Pontos para Feltro',
+                content: this.getGuiaPontosFeltroHTML(),
+                module: 'feltro'
+            }
+        };
+    },
+    
+    setupEventListeners: function() {
+        const toolCards = document.querySelectorAll('.tool-card[data-module="feltro"]');
+        toolCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                const toolName = card.getAttribute('data-tool');
+                if (this.tools[toolName]) {
+                    App.openTool(this.tools[toolName]);
+                }
+            });
+        });
+    },
+    
+    initializeTool: function(toolName) {
+        switch(toolName) {
+            case 'precificacao':
+                // Usa a mesma função do módulo de bordado
+                if (typeof initPrecificacao === 'function') initPrecificacao();
+                break;
+            case 'quantidade-feltro':
+                if (typeof initQuantidadeFeltro === 'function') initQuantidadeFeltro();
+                break;
+            case 'conversor-medidas':
+                // Usa a mesma função do módulo de bordado
+                if (typeof initConversorMedidas === 'function') initConversorMedidas();
+                break;
+            case 'calculadora-tempo':
+                // Usa a mesma função do módulo de bordado
+                if (typeof initCalculadoraTempo === 'function') initCalculadoraTempo();
+                break;
+            case 'calculadora-enchimento':
+                if (typeof initCalculadoraEnchimento === 'function') initCalculadoraEnchimento();
+                break;
+            case 'calculadora-padrao':
+                if (typeof initCalculadoraPadrao === 'function') initCalculadoraPadrao();
+                break;
+            case 'guia-pontos-feltro':
+                if (typeof initGuiaPontosFeltro === 'function') initGuiaPontosFeltro();
+                break;
+        }
+    },
+    
+    configurarInputs: function(toolName) {
+        const inputIds = {
+            'precificacao': ['custo-insumos', 'custo-mao-obra', 'outros-custos', 'valor-metodo'],
+            'quantidade-feltro': ['largura-feltro', 'altura-feltro', 'largura-peca', 'altura-peca', 'numero-camadas'],
+            'conversor-medidas': ['valor-converter'],
+            'calculadora-tempo': ['tempo-trabalho', 'valor-hora', 'quantidade-pecas'],
+            'calculadora-enchimento': ['largura-peca', 'altura-peca', 'profundidade-peca', 'tipo-enchimento'],
+            'calculadora-padrao': ['largura-original', 'altura-original', 'largura-nova', 'altura-nova']
+        };
+        
+        const ids = inputIds[toolName] || [];
+        ids.forEach(id => {
+            if (typeof configurarInputBrasileiro === 'function') {
+                configurarInputBrasileiro(id);
+            }
+        });
+    },
+    
+    // Funções HTML
+    getPrecificacaoHTML: function() {
+        return `
+            <div id="precificacao-container">
+                <div class="mb-4">
+                    <h6 class="mb-3">Custos do Produto</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Custo dos Insumos (R$)</label>
+                        <input type="text" id="custo-insumos" class="form-control" step="0.01" min="0" placeholder="0,00" inputmode="decimal">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Custo de Mão de Obra (R$)</label>
+                        <input type="text" id="custo-mao-obra" class="form-control" step="0.01" min="0" placeholder="0,00" inputmode="decimal">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Outros Custos (R$)</label>
+                        <input type="text" id="outros-custos" class="form-control" step="0.01" min="0" placeholder="0,00" value="0" inputmode="decimal">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="mb-3">Método de Cálculo</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Escolha o método:</label>
+                        <select id="metodo-calculo" class="form-select">
+                            <option value="markup">Mark-up (Multiplicador)</option>
+                            <option value="margem">Margem de Lucro (%)</option>
+                            <option value="preco-mercado">Preço de Mercado</option>
+                        </select>
+                    </div>
+                    <div id="campo-metodo" class="mb-3">
+                        <label class="form-label" id="label-metodo">Mark-up (ex: 2,5 para 150% de lucro)</label>
+                        <input type="text" id="valor-metodo" class="form-control" step="0.01" min="0" placeholder="0,00" inputmode="decimal">
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="calcularPrecificacao()">
+                    <i class="fas fa-calculator me-2"></i>Calcular Preço
+                </button>
+
+                <div id="resultado-precificacao"></div>
+            </div>
+        `;
+    },
+    
+    getQuantidadeFeltroHTML: function() {
+        return `
+            <div id="quantidade-feltro-container">
+                <div class="mb-4">
+                    <h6 class="mb-3">Dimensões do Feltro Disponível</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Largura (cm)</label>
+                            <input type="text" id="largura-feltro" class="form-control" step="0.01" min="0" placeholder="30,00" inputmode="decimal">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Altura (cm)</label>
+                            <input type="text" id="altura-feltro" class="form-control" step="0.01" min="0" placeholder="30,00" inputmode="decimal">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="mb-3">Dimensões Necessárias por Peça</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Largura necessária (cm)</label>
+                            <input type="text" id="largura-peca" class="form-control" step="0.01" min="0" placeholder="10,00" inputmode="decimal">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Altura necessária (cm)</label>
+                            <input type="text" id="altura-peca" class="form-control" step="0.01" min="0" placeholder="10,00" inputmode="decimal">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="mb-3">Configurações Adicionais</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Número de camadas por peça</label>
+                        <input type="text" id="numero-camadas" class="form-control" step="1" min="1" placeholder="2" value="2" inputmode="numeric">
+                        <div class="form-text">Quantas camadas de feltro você precisa para cada peça?</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="calcularQuantidadeFeltro()">
+                    <i class="fas fa-calculator me-2"></i>Calcular
+                </button>
+
+                <div id="resultado-quantidade-feltro"></div>
+            </div>
+        `;
+    },
+    
+    getConversorMedidasHTML: function() {
+        return `
+            <div id="conversor-medidas-container">
+                <div class="mb-3">
+                    <label class="form-label">Valor</label>
+                    <input type="text" id="valor-converter" class="form-control" step="0.01" placeholder="0,00" inputmode="decimal">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">De</label>
+                        <select id="unidade-origem" class="form-select">
+                            <option value="cm">Centímetros (cm)</option>
+                            <option value="m">Metros (m)</option>
+                            <option value="mm">Milímetros (mm)</option>
+                            <option value="pol">Polegadas (pol)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Para</label>
+                        <select id="unidade-destino" class="form-select">
+                            <option value="cm">Centímetros (cm)</option>
+                            <option value="m">Metros (m)</option>
+                            <option value="mm">Milímetros (mm)</option>
+                            <option value="pol">Polegadas (pol)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="converterMedida()">
+                    <i class="fas fa-exchange-alt me-2"></i>Converter
+                </button>
+
+                <div id="resultado-conversor"></div>
+            </div>
+        `;
+    },
+    
+    getCalculadoraTempoHTML: function() {
+        return `
+            <div id="calculadora-tempo-container">
+                <div class="mb-3">
+                    <label class="form-label">Tempo de trabalho (horas)</label>
+                    <input type="text" id="tempo-trabalho" class="form-control" step="0.01" min="0" placeholder="2,5" inputmode="decimal">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Valor da hora de trabalho (R$)</label>
+                    <input type="text" id="valor-hora" class="form-control" step="0.01" min="0" placeholder="20,00" inputmode="decimal">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Quantidade de peças produzidas</label>
+                    <input type="text" id="quantidade-pecas" class="form-control" step="1" min="1" placeholder="1" value="1" inputmode="numeric">
+                </div>
+
+                <button class="btn btn-calculate" onclick="calcularTempo()">
+                    <i class="fas fa-clock me-2"></i>Calcular
+                </button>
+
+                <div id="resultado-tempo"></div>
+            </div>
+        `;
+    },
+    
+    getCalculadoraEnchimentoHTML: function() {
+        return `
+            <div id="calculadora-enchimento-container">
+                <div class="mb-4">
+                    <h6 class="mb-3">Dimensões da Peça</h6>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Largura (cm)</label>
+                            <input type="text" id="largura-peca" class="form-control" step="0.01" min="0" placeholder="10,00" inputmode="decimal">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Altura (cm)</label>
+                            <input type="text" id="altura-peca" class="form-control" step="0.01" min="0" placeholder="10,00" inputmode="decimal">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Profundidade (cm)</label>
+                            <input type="text" id="profundidade-peca" class="form-control" step="0.01" min="0" placeholder="5,00" inputmode="decimal">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="mb-3">Tipo de Enchimento</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Selecione o tipo:</label>
+                        <select id="tipo-enchimento" class="form-select">
+                            <option value="fibra-sintetica">Fibra Sintética (fofinho)</option>
+                            <option value="algodao">Algodão</option>
+                            <option value="espuma">Espuma</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="calcularEnchimento()">
+                    <i class="fas fa-calculator me-2"></i>Calcular Enchimento
+                </button>
+
+                <div id="resultado-enchimento"></div>
+            </div>
+        `;
+    },
+    
+    getCalculadoraPadraoHTML: function() {
+        return `
+            <div id="calculadora-padrao-container">
+                <div class="mb-4">
+                    <h6 class="mb-3">Dimensões Originais do Padrão</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Largura original (cm)</label>
+                            <input type="text" id="largura-original" class="form-control" step="0.01" min="0" placeholder="10,00" inputmode="decimal">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Altura original (cm)</label>
+                            <input type="text" id="altura-original" class="form-control" step="0.01" min="0" placeholder="10,00" inputmode="decimal">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="mb-3">Nova Dimensão Desejada</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nova largura (cm)</label>
+                            <input type="text" id="largura-nova" class="form-control" step="0.01" min="0" placeholder="15,00" inputmode="decimal">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nova altura (cm) - opcional</label>
+                            <input type="text" id="altura-nova" class="form-control" step="0.01" min="0" placeholder="Deixe em branco para manter proporção" inputmode="decimal">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="calcularPadrao()">
+                    <i class="fas fa-calculator me-2"></i>Calcular Escala
+                </button>
+
+                <div id="resultado-padrao"></div>
+            </div>
+        `;
+    },
+    
+    getGuiaPontosFeltroHTML: function() {
+        return `
+            <div id="guia-pontos-feltro-container">
+                <div class="mb-4">
+                    <p class="text-muted">Selecione um ponto para ver as instruções detalhadas:</p>
+                    <select id="seletor-ponto-feltro" class="form-select mb-3">
+                        <option value="">Selecione um ponto...</option>
+                        <option value="ponto-invisivel">Ponto Invisível</option>
+                        <option value="ponto-chuleado">Ponto Chuleado</option>
+                        <option value="ponto-caseado">Ponto Caseado</option>
+                        <option value="ponto-palito">Ponto Palito</option>
+                        <option value="ponto-espinha">Ponto Espinha</option>
+                    </select>
+                </div>
+
+                <div id="conteudo-ponto-feltro"></div>
+            </div>
+        `;
+    }
+};
+

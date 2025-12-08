@@ -53,6 +53,12 @@ body {
     color: white !important;
 }
 
+.navbar-nav .nav-module.active {
+    color: white !important;
+    font-weight: 600;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
 .navbar-toggler {
     border-color: rgba(255, 255, 255, 0.3);
 }
@@ -294,5 +300,36 @@ body {
     .modal-body {
         padding: 1.5rem;
     }
+}
+
+/* Footer */
+.main-footer {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #A0826D 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-top: 4rem;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.main-footer p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.main-footer strong {
+    color: white;
+    font-weight: 600;
+}
+
+.main-footer .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.main-footer i {
+    color: white;
+}
+
+.main-footer .text-danger {
+    color: #ff6b6b !important;
 }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Artesanato - Ferramentas para Bordadeiras</title>
+    <title>Calculadora Artesanato - Ferramentas para Artesãs</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,10 +30,10 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#home">Início</a>
+                                <a class="nav-link nav-module active" id="nav-bordado" href="#bordado">Bordado</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#ferramentas">Ferramentas</a>
+                                <a class="nav-link nav-module" id="nav-feltro" href="#feltro">Feltro</a>
                             </li>
                         </ul>
                     </div>
@@ -47,22 +47,22 @@
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-lg-8">
-                    <h1 class="display-4 mb-4">Ferramentas para Artesãs</h1>
+                    <h1 class="display-4 mb-4">Ferramentas para Bordadeiras</h1>
                     <p class="lead mb-5">Calculadoras e ferramentas práticas para bordadeiras iniciantes</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Tools Section -->
+    <!-- Tools Section - Bordado -->
     <section id="ferramentas" class="tools-section py-5">
         <div class="container">
-            <h2 class="section-title text-center mb-5">Ferramentas Disponíveis</h2>
+            <h2 class="section-title text-center mb-5">Ferramentas de Bordado</h2>
             
-            <div class="row g-4">
+            <div id="ferramentas-bordado" class="row g-4">
                 <!-- Calculadora de Precificação -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="tool-card" data-tool="precificacao">
+                    <div class="tool-card" data-tool="precificacao" data-module="bordado">
                         <div class="tool-icon">
                             <i class="fas fa-calculator"></i>
                         </div>
@@ -74,7 +74,7 @@
 
                 <!-- Calculadora de Custo por Fio -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="tool-card" data-tool="custo-fio">
+                    <div class="tool-card" data-tool="custo-fio" data-module="bordado">
                         <div class="tool-icon">
                             <i class="fas fa-ruler"></i>
                         </div>
@@ -86,7 +86,7 @@
 
                 <!-- Conversor de Medidas -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="tool-card" data-tool="conversor-medidas">
+                    <div class="tool-card" data-tool="conversor-medidas" data-module="bordado">
                         <div class="tool-icon">
                             <i class="fas fa-exchange-alt"></i>
                         </div>
@@ -98,7 +98,7 @@
 
                 <!-- Calculadora de Tempo -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="tool-card" data-tool="calculadora-tempo">
+                    <div class="tool-card" data-tool="calculadora-tempo" data-module="bordado">
                         <div class="tool-icon">
                             <i class="fas fa-clock"></i>
                         </div>
@@ -110,7 +110,7 @@
 
                 <!-- Calculadora de Tecido -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="tool-card" data-tool="calculadora-tecido">
+                    <div class="tool-card" data-tool="calculadora-tecido" data-module="bordado">
                         <div class="tool-icon">
                             <i class="fas fa-cut"></i>
                         </div>
@@ -122,7 +122,7 @@
 
                 <!-- Calculadora de Pano para Bastidor -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="tool-card" data-tool="calculadora-bastidor">
+                    <div class="tool-card" data-tool="calculadora-bastidor" data-module="bordado">
                         <div class="tool-icon">
                             <i class="fas fa-circle"></i>
                         </div>
@@ -134,7 +134,7 @@
 
                 <!-- Guia de Pontos Básicos -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="tool-card" data-tool="guia-pontos">
+                    <div class="tool-card" data-tool="guia-pontos" data-module="bordado">
                         <div class="tool-icon">
                             <i class="fas fa-book"></i>
                         </div>
@@ -144,8 +144,114 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Tools Section - Feltro -->
+            <div id="ferramentas-feltro" class="row g-4 d-none">
+                <!-- Calculadora de Precificação -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card" data-tool="precificacao" data-module="feltro">
+                        <div class="tool-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3>Precificação</h3>
+                        <p>Calcule mark-up, margem, preço de mercado e custo de mão de obra</p>
+                        <button class="btn btn-primary">Abrir</button>
+                    </div>
+                </div>
+
+                <!-- Calculadora de Quantidade de Feltro -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card" data-tool="quantidade-feltro" data-module="feltro">
+                        <div class="tool-icon">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <h3>Quantidade de Feltro</h3>
+                        <p>Calcule quantas peças você pode fazer com um pedaço de feltro</p>
+                        <button class="btn btn-primary">Abrir</button>
+                    </div>
+                </div>
+
+                <!-- Conversor de Medidas -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card" data-tool="conversor-medidas" data-module="feltro">
+                        <div class="tool-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Conversor de Medidas</h3>
+                        <p>Converta entre centímetros, metros, polegadas e outras unidades</p>
+                        <button class="btn btn-primary">Abrir</button>
+                    </div>
+                </div>
+
+                <!-- Calculadora de Tempo -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card" data-tool="calculadora-tempo" data-module="feltro">
+                        <div class="tool-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Calculadora de Tempo</h3>
+                        <p>Calcule o tempo de trabalho e valor da mão de obra</p>
+                        <button class="btn btn-primary">Abrir</button>
+                    </div>
+                </div>
+
+                <!-- Calculadora de Enchimento -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card" data-tool="calculadora-enchimento" data-module="feltro">
+                        <div class="tool-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <h3>Calculadora de Enchimento</h3>
+                        <p>Calcule a quantidade de enchimento necessária para suas peças</p>
+                        <button class="btn btn-primary">Abrir</button>
+                    </div>
+                </div>
+
+                <!-- Redimensionador de Padrões -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card" data-tool="calculadora-padrao" data-module="feltro">
+                        <div class="tool-icon">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <h3>Redimensionador de Padrões</h3>
+                        <p>Redimensione padrões mantendo as proporções</p>
+                        <button class="btn btn-primary">Abrir</button>
+                    </div>
+                </div>
+
+                <!-- Guia de Pontos para Feltro -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="tool-card" data-tool="guia-pontos-feltro" data-module="feltro">
+                        <div class="tool-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Guia de Pontos para Feltro</h3>
+                        <p>Referência rápida de pontos básicos para trabalhos em feltro</p>
+                        <button class="btn btn-primary">Abrir</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-0">
+                        <i class="fas fa-palette me-2"></i>
+                        <strong>Calculadora Artesanato</strong> - Ferramentas para Artesãs
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0 text-muted">
+                        <small>© 2024 - Desenvolvido com <i class="fas fa-heart text-danger"></i> para artesãs iniciantes</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Modal Container -->
     <div id="toolModal" class="modal fade" tabindex="-1">
@@ -168,17 +274,26 @@
     <!-- Utils JS -->
     <script src="js/utils.js"></script>
     
+    <!-- Shared Scripts -->
+    <script src="js/shared/precificacao.js"></script>
+    <script src="js/shared/conversor-medidas.js"></script>
+    <script src="js/shared/calculadora-tempo.js"></script>
+    
+    <!-- Bordado Scripts -->
+    <script src="js/bordado/custo-fio.js"></script>
+    <script src="js/bordado/calculadora-tecido.js"></script>
+    <script src="js/bordado/calculadora-bastidor.js"></script>
+    <script src="js/bordado/guia-pontos.js"></script>
+    <script src="js/bordado/main-bordado.js"></script>
+    
+    <!-- Feltro Scripts -->
+    <script src="js/feltro/quantidade-feltro.js"></script>
+    <script src="js/feltro/calculadora-enchimento.js"></script>
+    <script src="js/feltro/calculadora-padrao.js"></script>
+    <script src="js/feltro/guia-pontos-feltro.js"></script>
+    <script src="js/feltro/main-feltro.js"></script>
+    
     <!-- Main JS -->
     <script src="js/main.js"></script>
-    
-    <!-- Tool Scripts -->
-    <script src="js/precificacao.js"></script>
-    <script src="js/custo-fio.js"></script>
-    <script src="js/conversor-medidas.js"></script>
-    <script src="js/calculadora-tempo.js"></script>
-    <script src="js/calculadora-tecido.js"></script>
-    <script src="js/calculadora-bastidor.js"></script>
-    <script src="js/guia-pontos.js"></script>
 </body>
 </html>
-
