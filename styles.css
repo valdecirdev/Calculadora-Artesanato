@@ -135,6 +135,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     border: 1px solid var(--border-color);
+    cursor: pointer;
 }
 
 .tool-card:hover {
@@ -302,7 +303,7 @@ body {
     border-left: none;
 }
 
-.input-group .form-control:focus + .input-group-text,
+.input-group .form-control:focus+.input-group-text,
 .input-group .form-control:focus {
     border-color: var(--secondary-color);
 }
@@ -312,19 +313,19 @@ body {
     .hero-section {
         padding: 2rem 0;
     }
-    
+
     .hero-section h1 {
         font-size: 2rem;
     }
-    
+
     .section-title {
         font-size: 2rem;
     }
-    
+
     .tool-card {
         padding: 1.5rem;
     }
-    
+
     .modal-body {
         padding: 1.5rem;
     }
@@ -360,4 +361,3 @@ body {
 .main-footer .text-danger {
     color: #ff6b6b !important;
 }
-
