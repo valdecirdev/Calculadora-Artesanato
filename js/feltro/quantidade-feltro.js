@@ -104,9 +104,44 @@ function calcularQuantidadeFeltro() {
             ${totalPecasComCamadas === 0 ? `
                 <div class="alert alert-warning mt-3">
                     <i class="fas fa-exclamation-triangle me-2"></i>
-                    Não é possível fazer nenhuma peça com essas dimensões.
+                    Não é possível fazer nenhuma peça com essas dimensões. O feltro é menor que o necessário ou o número de camadas é muito alto.
                 </div>
             ` : ''}
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-lightbulb me-2"></i>
+                <strong>Dicas de Otimização para Feltro:</strong>
+                <ul class="small mt-2 mb-0">
+                    ${percentualDesperdicio > 20 ? `
+                    <li class="text-warning"><strong>Atenção:</strong> Você está desperdiçando ${formatarNumero(percentualDesperdicio)}% do feltro. Considere:</li>
+                    <li>• Ajustar o tamanho das peças para melhor aproveitamento</li>
+                    <li>• Usar retalhos para peças menores ou detalhes</li>
+                    <li>• Planejar o corte antes de começar</li>
+                    <li>• Considerar comprar feltro em tamanhos que se encaixem melhor</li>
+                    ` : `
+                    <li class="text-success"><strong>Ótimo aproveitamento!</strong> Você está desperdiçando apenas ${formatarNumero(percentualDesperdicio)}% do feltro.</li>
+                    `}
+                    <li><strong>Planejamento:</strong> Desenhe um layout no papel antes de cortar para visualizar o melhor aproveitamento.</li>
+                    <li><strong>Orientacao:</strong> Considere girar as peças (largura x altura) para ver se cabe mais peças.</li>
+                    <li><strong>Retalhos:</strong> Guarde os retalhos para projetos menores, aplicações, olhos, narizes ou detalhes.</li>
+                    <li><strong>Camadas:</strong> Lembre-se que peças com múltiplas camadas precisam de mais feltro. Planeje bem!</li>
+                    <li><strong>Dica profissional:</strong> Feltro é mais caro que tecido comum, então otimizar o corte é essencial para a precificação.</li>
+                </ul>
+            </div>
+            
+            <div class="mt-3">
+                <strong><i class="fas fa-calculator me-2"></i>Informações Adicionais:</strong>
+                <div class="small mt-2">
+                    <div>Você pode fazer <strong>${totalPecasComCamadas}</strong> peça${totalPecasComCamadas !== 1 ? 's' : ''} completa${totalPecasComCamadas !== 1 ? 's' : ''} com ${numeroCamadas} camada${numeroCamadas !== 1 ? 's' : ''} cada.</div>
+                    <div>Área utilizada: <strong>${formatarNumero(areaUtilizada)} cm²</strong> de ${formatarNumero(areaFeltro)} cm² disponíveis.</div>
+                    ${pecasPorLargura > 0 && pecasPorAltura > 0 ? `
+                    <div>Layout sugerido: <strong>${pecasPorLargura}</strong> peças na largura × <strong>${pecasPorAltura}</strong> peças na altura.</div>
+                    ` : ''}
+                    <div class="mt-2">
+                        <strong>Economia:</strong> Com esse aproveitamento, você economiza aproximadamente <strong>${formatarNumero(areaDesperdicada)} cm²</strong> de feltro por peça produzida.
+                    </div>
+                </div>
+            </div>
         </div>
     `;
 }

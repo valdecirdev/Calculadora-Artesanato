@@ -168,10 +168,26 @@ function exibirPontoFeltro(ponto) {
             
             <div class="alert alert-info mt-3">
                 <i class="fas fa-info-circle me-2"></i>
-                <small>
-                    <strong>Dica Geral:</strong> Pratique cada ponto em pedaços de feltro antes de usar no seu projeto final. 
-                    A consistência vem com a prática!
-                </small>
+                <strong>Dicas Gerais para Trabalhar com Feltro:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li><strong>Prática:</strong> Pratique cada ponto em pedaços de feltro antes de usar no seu projeto final.</li>
+                    <li><strong>Fio:</strong> Use fio de algodão ou poliéster de boa qualidade. Fio muito fino pode se quebrar.</li>
+                    <li><strong>Agulha:</strong> Use agulha de tamanho médio. Muito fina pode deixar buracos grandes no feltro.</li>
+                    <li><strong>Tensão:</strong> Mantenha a tensão do fio uniforme. Muito apertado pode deformar o feltro.</li>
+                    <li><strong>Cor do fio:</strong> Para pontos invisíveis, use fio da mesma cor. Para pontos decorativos, use cores contrastantes.</li>
+                    <li><strong>Consistência:</strong> A consistência vem com a prática! Não desanime se não sair perfeito na primeira vez.</li>
+                </ul>
+            </div>
+            
+            <div class="mt-3">
+                <strong><i class="fas fa-tools me-2"></i>Materiais Recomendados:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li><strong>Fio:</strong> Linha de algodão ou poliéster (DMC, Anchor, ou similar)</li>
+                    <li><strong>Agulha:</strong> Agulha de costura tamanho médio (entre 5-8)</li>
+                    <li><strong>Feltro:</strong> Feltro de boa qualidade (100% lã ou acrílico de alta densidade)</li>
+                    <li><strong>Tesoura:</strong> Tesoura afiada para cortes precisos</li>
+                    <li><strong>Alfinetes:</strong> Para manter as peças alinhadas durante a costura</li>
+                </ul>
             </div>
         </div>
     `;
