@@ -152,7 +152,7 @@ function copiarChecklistFeltro() {
         }
     });
 
-    texto += `\nGerado por ArteCalc`;
+    texto += `\nGerado por CozyCalc`;
 
     navigator.clipboard.writeText(texto).then(() => {
         const btn = document.querySelector('button[onclick^="copiarChecklistFeltro"]');
