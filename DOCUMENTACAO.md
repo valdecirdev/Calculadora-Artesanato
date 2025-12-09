@@ -253,6 +253,14 @@ configurarInputs: function(toolName) {
    - Permite copiar a lista para área de transferência
 
 ### Módulo Feltro
+- Calculadora de Precificação
+- Calculadora de Quantidade de Feltro
+- Conversor de Medidas
+- Calculadora de Tempo
+- Calculadora de Enchimento (Fibra/Outros)
+- Redimensionador de Padrões
+- Checklist de Início de Projeto
+- Gerador de Paleta de Cores
 
 1. **Precificação** (`precificacao.js` - shared)
    - Mesma ferramenta do bordado
@@ -280,7 +288,10 @@ configurarInputs: function(toolName) {
     - Referência de pontos específicos para feltro
     - Pontos: Invisível, Chuleado, Caseado, Palito, Espinha
 
-8. **Checklist de Início de Projeto** (`checklist-feltro.js`)
+8. **Calculadora de Aida** (`calculadora-aida.js`)
+    - Calcula tamanho de corte para bordado Ponto Cruz
+
+9. **Checklist de Início de Projeto** (`checklist-feltro.js`)
     - Gera lista de materiais para: Bonecos, Guirlandas, Lembrancinhas
     - Permite copiar a lista para área de transferência
 

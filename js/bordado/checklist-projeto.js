@@ -40,6 +40,9 @@ const tiposProjeto = {
     }
 };
 
+let checklistAtual = [];
+let tituloAtual = '';
+
 function initChecklistProjeto() {
     // Inicialização se necessária
 }
@@ -54,41 +57,65 @@ function gerarChecklist() {
         return;
     }
 
+    // Inicializa o estado com uma cópia profunda dos dados para não alterar o original
     const projeto = tiposProjeto[tipo];
+    checklistAtual = JSON.parse(JSON.stringify(projeto.materiais));
+    tituloAtual = projeto.titulo;
+
+    renderizarChecklist();
+}
+
+function renderizarChecklist() {
+    const resultadoDiv = document.getElementById('resultado-checklist');
+    if (!resultadoDiv) return;
 
     let htmlLista = `
         <div class="result-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0"><i class="fas fa-list-check me-2"></i>${projeto.titulo}</h5>
-                <button class="btn btn-sm btn-outline-secondary" onclick="copiarChecklist('${tipo}')">
+                <h5 class="mb-0"><i class="fas fa-list-check me-2"></i>${tituloAtual}</h5>
+                <button class="btn btn-sm btn-outline-secondary" onclick="copiarChecklist()">
                     <i class="fas fa-copy me-1"></i> Copiar
                 </button>
             </div>
             
-            <p class="text-muted mb-4">${projeto.descricao}</p>
-            
-            <div class="list-group">
+            <div class="mb-4">
+                <small class="text-muted d-block mb-2"><i class="fas fa-edit me-1"></i> Personalize sua lista: edite os textos, apague ou adicione itens.</small>
+                <div class="list-group" id="lista-checks">
     `;
 
-    projeto.materiais.forEach((material, index) => {
+    checklistAtual.forEach((material, index) => {
         htmlLista += `
-            <label class="list-group-item d-flex gap-3 align-items-start">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" id="item-${index}">
-                <span>
-                    <strong>${material.item}</strong>
-                    <br>
-                    <small class="text-muted">${material.detalhe}</small>
-                </span>
-            </label>
+            <div class="list-group-item d-flex gap-2 align-items-start bg-light-hover">
+                <div class="pt-2">
+                    <input class="form-check-input" type="checkbox" value="" id="check-${index}">
+                </div>
+                <div class="flex-grow-1">
+                    <input type="text" class="form-control form-control-sm mb-1 fw-bold border-0 bg-transparent edit-input" 
+                           value="${material.item}" 
+                           placeholder="Nome do item"
+                           onchange="atualizarItem(${index}, 'item', this.value)">
+                    <input type="text" class="form-control form-control-sm text-muted border-0 bg-transparent edit-input" 
+                           value="${material.detalhe}" 
+                           placeholder="Detalhes..."
+                           onchange="atualizarItem(${index}, 'detalhe', this.value)">
+                </div>
+                <button class="btn btn-sm text-danger btn-icon-only" onclick="removerItem(${index})" title="Remover item">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
         `;
     });
 
     htmlLista += `
+                </div>
+                <button class="btn btn-sm btn-outline-primary mt-3 w-100 dashed-border" onclick="adicionarItem()">
+                    <i class="fas fa-plus me-1"></i> Adicionar Item
+                </button>
             </div>
             
             <div class="alert alert-info mt-3 mb-0">
                 <i class="fas fa-lightbulb me-2"></i>
-                <small>Dica: Marque os itens que você já separou!</small>
+                <small>As alterações são aplicadas ao clicar em "Copiar".</small>
             </div>
         </div>
     `;
@@ -96,32 +123,78 @@ function gerarChecklist() {
     resultadoDiv.innerHTML = htmlLista;
 }
 
-function copiarChecklist(tipo) {
-    const projeto = tiposProjeto[tipo];
-    if (!projeto) return;
+function atualizarItem(index, campo, valor) {
+    if (checklistAtual[index]) {
+        checklistAtual[index][campo] = valor;
+    }
+}
 
-    let texto = `*Checklist: ${projeto.titulo}*\n\n`;
-    projeto.materiais.forEach(m => {
-        texto += `[ ] ${m.item}: ${m.detalhe}\n`;
+function removerItem(index) {
+    checklistAtual.splice(index, 1);
+    renderizarChecklist();
+}
+
+function adicionarItem() {
+    checklistAtual.push({ item: 'Novo Item', detalhe: 'Detalhes do item' });
+    renderizarChecklist();
+}
+
+function copiarChecklist() {
+    if (checklistAtual.length === 0) return;
+
+    let texto = `*Checklist: ${tituloAtual}*\n\n`;
+    checklistAtual.forEach(m => {
+        // Ignora itens com nome vazio
+        if (m.item.trim()) {
+            texto += `[ ] ${m.item}: ${m.detalhe}\n`;
+        }
     });
 
     texto += `\nGerado por ArteCalc`;
 
     navigator.clipboard.writeText(texto).then(() => {
         const btn = document.querySelector('button[onclick^="copiarChecklist"]');
-        const originalText = btn.innerHTML;
+        if (btn) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check me-1"></i> Copiado!';
+            btn.classList.remove('btn-outline-secondary');
+            btn.classList.add('btn-success');
 
-        btn.innerHTML = '<i class="fas fa-check me-1"></i> Copiado!';
-        btn.classList.remove('btn-outline-secondary');
-        btn.classList.add('btn-success');
-
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.classList.remove('btn-success');
-            btn.classList.add('btn-outline-secondary');
-        }, 2000);
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-outline-secondary');
+            }, 2000);
+        }
     }).catch(err => {
         console.error('Erro ao copiar:', err);
         alert('Não foi possível copiar automaticamente.');
     });
 }
+
+// Estilo CSS extra (injetado via JS para não mexer no CSS global agora)
+const style = document.createElement('style');
+style.innerHTML = `
+    .btn-icon-only {
+        border: none;
+        background: transparent;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+    }
+    .btn-icon-only:hover {
+        opacity: 1;
+        background: rgba(220, 53, 69, 0.1);
+    }
+    .bg-light-hover:hover {
+        background-color: #f8f9fa;
+    }
+    .edit-input:focus {
+        background-color: #fff !important;
+        border: 1px solid #ced4da !important;
+        box-shadow: none;
+    }
+    .dashed-border {
+        border-style: dashed;
+    }
+`;
+document.head.appendChild(style);

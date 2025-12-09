@@ -43,6 +43,9 @@ const tiposProjetoFeltro = {
     }
 };
 
+let checklistFeltroAtual = [];
+let tituloFeltroAtual = '';
+
 function initChecklistFeltro() {
     // Inicialização se necessária
 }
@@ -57,41 +60,65 @@ function gerarChecklistFeltro() {
         return;
     }
 
+    // Inicializa estado
     const projeto = tiposProjetoFeltro[tipo];
+    checklistFeltroAtual = JSON.parse(JSON.stringify(projeto.materiais));
+    tituloFeltroAtual = projeto.titulo;
+
+    renderizarChecklistFeltro();
+}
+
+function renderizarChecklistFeltro() {
+    const resultadoDiv = document.getElementById('resultado-checklist-feltro');
+    if (!resultadoDiv) return;
 
     let htmlLista = `
         <div class="result-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0"><i class="fas fa-list-check me-2"></i>${projeto.titulo}</h5>
-                <button class="btn btn-sm btn-outline-secondary" onclick="copiarChecklistFeltro('${tipo}')">
+                <h5 class="mb-0"><i class="fas fa-list-check me-2"></i>${tituloFeltroAtual}</h5>
+                <button class="btn btn-sm btn-outline-secondary" onclick="copiarChecklistFeltro()">
                     <i class="fas fa-copy me-1"></i> Copiar
                 </button>
             </div>
             
-            <p class="text-muted mb-4">${projeto.descricao}</p>
-            
-            <div class="list-group">
+            <div class="mb-4">
+                <small class="text-muted d-block mb-2"><i class="fas fa-edit me-1"></i> Personalize sua lista: edite os textos, apague ou adicione itens.</small>
+                <div class="list-group" id="lista-checks-feltro">
     `;
 
-    projeto.materiais.forEach((material, index) => {
+    checklistFeltroAtual.forEach((material, index) => {
         htmlLista += `
-            <label class="list-group-item d-flex gap-3 align-items-start">
-                <input class="form-check-input flex-shrink-0" type="checkbox" value="" id="item-feltro-${index}">
-                <span>
-                    <strong>${material.item}</strong>
-                    <br>
-                    <small class="text-muted">${material.detalhe}</small>
-                </span>
-            </label>
+            <div class="list-group-item d-flex gap-2 align-items-start bg-light-hover">
+                <div class="pt-2">
+                    <input class="form-check-input" type="checkbox" value="" id="check-feltro-${index}">
+                </div>
+                <div class="flex-grow-1">
+                    <input type="text" class="form-control form-control-sm mb-1 fw-bold border-0 bg-transparent edit-input" 
+                           value="${material.item}" 
+                           placeholder="Nome do item"
+                           onchange="atualizarItemFeltro(${index}, 'item', this.value)">
+                    <input type="text" class="form-control form-control-sm text-muted border-0 bg-transparent edit-input" 
+                           value="${material.detalhe}" 
+                           placeholder="Detalhes..."
+                           onchange="atualizarItemFeltro(${index}, 'detalhe', this.value)">
+                </div>
+                <button class="btn btn-sm text-danger btn-icon-only" onclick="removerItemFeltro(${index})" title="Remover item">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
         `;
     });
 
     htmlLista += `
+                </div>
+                <button class="btn btn-sm btn-outline-primary mt-3 w-100 dashed-border" onclick="adicionarItemFeltro()">
+                    <i class="fas fa-plus me-1"></i> Adicionar Item
+                </button>
             </div>
             
             <div class="alert alert-info mt-3 mb-0">
                 <i class="fas fa-lightbulb me-2"></i>
-                <small>Dica: Revise se tem linha suficiente para todas as peças!</small>
+                <small>As alterações são aplicadas ao clicar em "Copiar".</small>
             </div>
         </div>
     `;
@@ -99,13 +126,30 @@ function gerarChecklistFeltro() {
     resultadoDiv.innerHTML = htmlLista;
 }
 
-function copiarChecklistFeltro(tipo) {
-    const projeto = tiposProjetoFeltro[tipo];
-    if (!projeto) return;
+function atualizarItemFeltro(index, campo, valor) {
+    if (checklistFeltroAtual[index]) {
+        checklistFeltroAtual[index][campo] = valor;
+    }
+}
 
-    let texto = `*Checklist Feltro: ${projeto.titulo}*\n\n`;
-    projeto.materiais.forEach(m => {
-        texto += `[ ] ${m.item}: ${m.detalhe}\n`;
+function removerItemFeltro(index) {
+    checklistFeltroAtual.splice(index, 1);
+    renderizarChecklistFeltro();
+}
+
+function adicionarItemFeltro() {
+    checklistFeltroAtual.push({ item: 'Novo Item', detalhe: 'Detalhes do item' });
+    renderizarChecklistFeltro();
+}
+
+function copiarChecklistFeltro() {
+    if (checklistFeltroAtual.length === 0) return;
+
+    let texto = `*Checklist Feltro: ${tituloFeltroAtual}*\n\n`;
+    checklistFeltroAtual.forEach(m => {
+        if (m.item.trim()) {
+            texto += `[ ] ${m.item}: ${m.detalhe}\n`;
+        }
     });
 
     texto += `\nGerado por ArteCalc`;

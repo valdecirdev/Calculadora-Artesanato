@@ -75,6 +75,18 @@ const BordadoModule = {
                 title: 'Checklist de Início de Projeto',
                 content: this.getChecklistProjetoHTML(),
                 module: 'bordado'
+            },
+            'calculadora-aida': {
+                id: 'calculadora-aida',
+                title: 'Calculadora de Tecido Aida (Ponto Cruz)',
+                content: this.getCalculadoraAidaHTML(),
+                module: 'bordado'
+            },
+            'paleta-cores': {
+                id: 'paleta-cores',
+                title: 'Gerador de Paleta de Cores',
+                content: this.getPaletaCoresHTML(),
+                module: 'bordado'
             }
         };
     },
@@ -126,6 +138,12 @@ const BordadoModule = {
             case 'checklist-projeto':
                 if (typeof initChecklistProjeto === 'function') initChecklistProjeto();
                 break;
+            case 'calculadora-aida':
+                if (typeof initCalculadoraAida === 'function') initCalculadoraAida();
+                break;
+            case 'paleta-cores':
+                if (typeof initPaletaCores === 'function') initPaletaCores();
+                break;
         }
     },
 
@@ -136,7 +154,8 @@ const BordadoModule = {
             'conversor-medidas': ['valor-converter'],
             'calculadora-tempo': ['tempo-trabalho', 'valor-hora', 'quantidade-pecas'],
             'calculadora-tecido': ['largura-tecido', 'altura-tecido', 'largura-peca', 'altura-peca', 'numero-camadas'],
-            'calculadora-bastidor': ['diametro-bastidor', 'margem-trabalho-acabamento']
+            'calculadora-bastidor': ['diametro-bastidor', 'margem-trabalho-acabamento'],
+            'calculadora-aida': ['margem-aida']
         };
 
         const ids = inputIds[toolName] || [];
@@ -169,6 +188,28 @@ const BordadoModule = {
 
                 <div class="mb-4">
                     <h6 class="mb-3">Método de Cálculo</h6>
+
+                    <div class="accordion mb-4" id="accordionDicasFeltro">
+                         <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingDicasFeltro">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDicasFeltro" aria-expanded="false" aria-controls="collapseDicasFeltro">
+                                    <i class="fas fa-lightbulb me-2 text-warning"></i> Entenda os métodos de cálculo
+                                </button>
+                            </h2>
+                            <div id="collapseDicasFeltro" class="accordion-collapse collapse" aria-labelledby="headingDicasFeltro" data-bs-parent="#accordionDicasFeltro">
+                                <div class="accordion-body small">
+                                    <ul class="mb-0">
+                                        <li><strong>Mark-up:</strong> Multiplicador simples sobre o custo. Ex: 2,5x significa que você vende por 2,5 vezes o custo.</li>
+                                        <li><strong>Margem:</strong> Percentual de lucro sobre o preço final. Mais preciso para análise financeira.</li>
+                                        <li><strong>Preço de Mercado:</strong> Baseado na concorrência. Verifique se cobre seus custos e gera lucro adequado.</li>
+                                        <li>Para artesanato, margens entre 40-60% são comuns e saudáveis.</li>
+                                        <li>Lembre-se de incluir todos os custos: materiais, tempo, embalagem, marketing, etc.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">Escolha o método:</label>
                         <select id="metodo-calculo" class="form-select">
@@ -507,6 +548,83 @@ const BordadoModule = {
                 </button>
 
                 <div id="resultado-checklist" class="mt-4"></div>
+            </div>
+        `;
+    },
+
+    getCalculadoraAidaHTML: function () {
+        return `
+            <div id="calculadora-aida-container">
+                <div class="mb-4">
+                    <h6 class="mb-3">Dimensões do Gráfico</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Largura (em pontos)</label>
+                            <input type="number" id="largura-pontos" class="form-control" placeholder="Ex: 150" inputmode="numeric">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Altura (em pontos)</label>
+                            <input type="number" id="altura-pontos" class="form-control" placeholder="Ex: 200" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="mb-3">Configurações do Tecido</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Count do Tecido (ct)</label>
+                            <select id="count-tecido" class="form-control form-select">
+                                <option value="14" selected>14 ct (Mais comum)</option>
+                                <option value="6">6 ct</option>
+                                <option value="8">8 ct</option>
+                                <option value="11">11 ct</option>
+                                <option value="16">16 ct</option>
+                                <option value="18">18 ct</option>
+                                <option value="22">22 ct (Hardanger)</option>
+                                <option value="25">25 ct</option>
+                                <option value="28">28 ct</option>
+                                <option value="32">32 ct</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Margem de Segurança (cm)</label>
+                            <input type="text" id="margem-aida" class="form-control" placeholder="5,00" value="5,00" inputmode="decimal">
+                            <div class="form-text">Margem para cada lado (para moldura)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="calcularAida()">
+                    <i class="fas fa-calculator me-2"></i>Calcular Tamanho
+                </button>
+
+                <div id="resultado-aida"></div>
+            </div>
+        `;
+    },
+
+    getPaletaCoresHTML: function () {
+        return `
+            <div id="paleta-cores-container">
+                <div class="mb-4">
+                    <h6 class="mb-3">Selecione a Cor Base</h6>
+                    <div class="row align-items-end">
+                        <div class="col-md-2 mb-3">
+                             <input type="color" id="cor-base-input" class="form-control form-control-color w-100" value="#FF5733" title="Escolha a cor">
+                        </div>
+                        <div class="col-md-10 mb-3">
+                            <label class="form-label">Código Hexadecimal</label>
+                            <input type="text" id="cor-base-hex" class="form-control" value="#FF5733" maxlength="7" placeholder="#FF5733">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="gerarPaleta()">
+                    <i class="fas fa-palette me-2"></i>Gerar Harmonias
+                </button>
+
+                <div id="resultado-paleta" class="mt-4"></div>
             </div>
         `;
     }

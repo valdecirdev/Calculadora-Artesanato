@@ -57,6 +57,12 @@ const FeltroModule = {
                 title: 'Checklist de Início de Projeto (Feltro)',
                 content: this.getChecklistFeltroHTML(),
                 module: 'feltro'
+            },
+            'paleta-cores': {
+                id: 'paleta-cores',
+                title: 'Gerador de Paleta de Cores',
+                content: this.getPaletaCoresHTML(),
+                module: 'feltro'
             }
         };
     },
@@ -102,6 +108,9 @@ const FeltroModule = {
             case 'checklist-feltro':
                 if (typeof initChecklistFeltro === 'function') initChecklistFeltro();
                 break;
+            case 'paleta-cores':
+                if (typeof initPaletaCores === 'function') initPaletaCores();
+                break;
         }
     },
 
@@ -111,7 +120,7 @@ const FeltroModule = {
             'quantidade-feltro': ['largura-feltro', 'altura-feltro', 'largura-peca', 'altura-peca', 'numero-camadas'],
             'conversor-medidas': ['valor-converter'],
             'calculadora-tempo': ['tempo-trabalho', 'valor-hora', 'quantidade-pecas'],
-            'calculadora-enchimento': ['largura-peca', 'altura-peca', 'profundidade-peca', 'tipo-enchimento'],
+            'calculadora-enchimento': ['largura-peca', 'altura-peca', 'profundidade-peca'],
             'calculadora-padrao': ['largura-original', 'altura-original', 'largura-nova', 'altura-nova']
         };
 
@@ -145,6 +154,28 @@ const FeltroModule = {
 
                 <div class="mb-4">
                     <h6 class="mb-3">Método de Cálculo</h6>
+
+                    <div class="accordion mb-4" id="accordionDicasFeltro">
+                         <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingDicasFeltro">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDicasFeltro" aria-expanded="false" aria-controls="collapseDicasFeltro">
+                                    <i class="fas fa-lightbulb me-2 text-warning"></i> Entenda os métodos de cálculo
+                                </button>
+                            </h2>
+                            <div id="collapseDicasFeltro" class="accordion-collapse collapse" aria-labelledby="headingDicasFeltro" data-bs-parent="#accordionDicasFeltro">
+                                <div class="accordion-body small">
+                                    <ul class="mb-0">
+                                        <li><strong>Mark-up:</strong> Multiplicador simples sobre o custo. Ex: 2,5x significa que você vende por 2,5 vezes o custo.</li>
+                                        <li><strong>Margem:</strong> Percentual de lucro sobre o preço final. Mais preciso para análise financeira.</li>
+                                        <li><strong>Preço de Mercado:</strong> Baseado na concorrência. Verifique se cobre seus custos e gera lucro adequado.</li>
+                                        <li>Para artesanato, margens entre 40-60% são comuns e saudáveis.</li>
+                                        <li>Lembre-se de incluir todos os custos: materiais, tempo, embalagem, marketing, etc.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="mb-3">
                         <label class="form-label">Escolha o método:</label>
                         <select id="metodo-calculo" class="form-select">
@@ -401,6 +432,11 @@ const FeltroModule = {
                 <div id="resultado-checklist-feltro" class="mt-4"></div>
             </div>
         `;
+    },
+
+    getPaletaCoresHTML: function () {
+        // Reusa a mesma estrutura do bordado
+        return BordadoModule.getPaletaCoresHTML();
     }
 };
 
