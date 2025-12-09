@@ -51,6 +51,24 @@ const BordadoModule = {
                 title: 'Guia de Pontos Básicos',
                 content: this.getGuiaPontosHTML(),
                 module: 'bordado'
+            },
+            'conversor-hex': {
+                id: 'conversor-hex',
+                title: 'Conversor de Hexadecimal',
+                content: this.getConversorHexHTML(),
+                module: 'bordado'
+            },
+            'conversor-rgb': {
+                id: 'conversor-rgb',
+                title: 'Conversor de RGB',
+                content: this.getConversorRGBHTML(),
+                module: 'bordado'
+            },
+            'conversor-linhas': {
+                id: 'conversor-linhas',
+                title: 'Conversor entre Linhas',
+                content: this.getConversorLinhasHTML(),
+                module: 'bordado'
             }
         };
     },
@@ -89,6 +107,15 @@ const BordadoModule = {
                 break;
             case 'guia-pontos':
                 if (typeof initGuiaPontos === 'function') initGuiaPontos();
+                break;
+            case 'conversor-hex':
+                if (typeof initConversorHex === 'function') initConversorHex();
+                break;
+            case 'conversor-rgb':
+                if (typeof initConversorRGB === 'function') initConversorRGB();
+                break;
+            case 'conversor-linhas':
+                if (typeof initConversorLinhas === 'function') initConversorLinhas();
                 break;
         }
     },
@@ -345,6 +372,110 @@ const BordadoModule = {
                 </div>
 
                 <div id="conteudo-ponto"></div>
+            </div>
+        `;
+    },
+    
+    getConversorHexHTML: function() {
+        return `
+            <div id="conversor-hex-container">
+                <div class="mb-3">
+                    <label class="form-label">Cor Hexadecimal</label>
+                    <input type="text" id="hex-input" class="form-control" placeholder="#FF5733 ou FF5733" maxlength="7">
+                    <div class="form-text">Digite a cor em formato hexadecimal (com ou sem #)</div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="mostrar-descontinuadas-hex" checked>
+                        <label class="form-check-label" for="mostrar-descontinuadas-hex">
+                            Mostrar cores descontinuadas (Anchor)
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="converterHex()">
+                    <i class="fas fa-exchange-alt me-2"></i>Converter
+                </button>
+
+                <div id="resultado-conversor-hex"></div>
+            </div>
+        `;
+    },
+    
+    getConversorRGBHTML: function() {
+        return `
+            <div id="conversor-rgb-container">
+                <div class="mb-3">
+                    <label class="form-label">Valor R (Vermelho)</label>
+                    <input type="number" id="rgb-r" class="form-control" min="0" max="255" placeholder="255" inputmode="numeric">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Valor G (Verde)</label>
+                    <input type="number" id="rgb-g" class="form-control" min="0" max="255" placeholder="87" inputmode="numeric">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Valor B (Azul)</label>
+                    <input type="number" id="rgb-b" class="form-control" min="0" max="255" placeholder="51" inputmode="numeric">
+                </div>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="mostrar-descontinuadas-rgb" checked>
+                        <label class="form-check-label" for="mostrar-descontinuadas-rgb">
+                            Mostrar cores descontinuadas (Anchor)
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="converterRGB()">
+                    <i class="fas fa-exchange-alt me-2"></i>Converter
+                </button>
+
+                <div id="resultado-conversor-rgb"></div>
+            </div>
+        `;
+    },
+    
+    getConversorLinhasHTML: function() {
+        return `
+            <div id="conversor-linhas-container">
+                <div class="mb-3">
+                    <label class="form-label">Código da Linha</label>
+                    <input type="text" id="codigo-linha" class="form-control" placeholder="Ex: 310" inputmode="numeric">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Marca de Origem</label>
+                        <select id="marca-origem" class="form-select">
+                            <option value="">Selecione...</option>
+                            <option value="Anchor">Anchor</option>
+                            <option value="DMC">DMC</option>
+                            <option value="Maxi">Maxi</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Marca de Destino</label>
+                        <select id="marca-destino" class="form-select">
+                            <option value="">Selecione...</option>
+                            <option value="Anchor">Anchor</option>
+                            <option value="DMC">DMC</option>
+                            <option value="Maxi">Maxi</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="mostrar-descontinuadas-linhas" checked>
+                        <label class="form-check-label" for="mostrar-descontinuadas-linhas">
+                            Mostrar cores descontinuadas (Anchor)
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-calculate" onclick="converterLinhas()">
+                    <i class="fas fa-exchange-alt me-2"></i>Converter
+                </button>
+
+                <div id="resultado-conversor-linhas"></div>
             </div>
         `;
     }
