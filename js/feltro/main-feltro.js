@@ -2,13 +2,13 @@
 
 const FeltroModule = {
     tools: {},
-    
-    init: function() {
+
+    init: function () {
         this.loadTools();
         this.setupEventListeners();
     },
-    
-    loadTools: function() {
+
+    loadTools: function () {
         this.tools = {
             'precificacao': {
                 id: 'precificacao',
@@ -51,11 +51,17 @@ const FeltroModule = {
                 title: 'Guia de Pontos para Feltro',
                 content: this.getGuiaPontosFeltroHTML(),
                 module: 'feltro'
+            },
+            'checklist-feltro': {
+                id: 'checklist-feltro',
+                title: 'Checklist de Início de Projeto (Feltro)',
+                content: this.getChecklistFeltroHTML(),
+                module: 'feltro'
             }
         };
     },
-    
-    setupEventListeners: function() {
+
+    setupEventListeners: function () {
         const toolCards = document.querySelectorAll('.tool-card[data-module="feltro"]');
         toolCards.forEach(card => {
             card.addEventListener('click', (e) => {
@@ -66,9 +72,9 @@ const FeltroModule = {
             });
         });
     },
-    
-    initializeTool: function(toolName) {
-        switch(toolName) {
+
+    initializeTool: function (toolName) {
+        switch (toolName) {
             case 'precificacao':
                 // Usa a mesma função do módulo de bordado
                 if (typeof initPrecificacao === 'function') initPrecificacao();
@@ -93,10 +99,13 @@ const FeltroModule = {
             case 'guia-pontos-feltro':
                 if (typeof initGuiaPontosFeltro === 'function') initGuiaPontosFeltro();
                 break;
+            case 'checklist-feltro':
+                if (typeof initChecklistFeltro === 'function') initChecklistFeltro();
+                break;
         }
     },
-    
-    configurarInputs: function(toolName) {
+
+    configurarInputs: function (toolName) {
         const inputIds = {
             'precificacao': ['custo-insumos', 'custo-mao-obra', 'outros-custos', 'valor-metodo'],
             'quantidade-feltro': ['largura-feltro', 'altura-feltro', 'largura-peca', 'altura-peca', 'numero-camadas'],
@@ -105,7 +114,7 @@ const FeltroModule = {
             'calculadora-enchimento': ['largura-peca', 'altura-peca', 'profundidade-peca', 'tipo-enchimento'],
             'calculadora-padrao': ['largura-original', 'altura-original', 'largura-nova', 'altura-nova']
         };
-        
+
         const ids = inputIds[toolName] || [];
         ids.forEach(id => {
             if (typeof configurarInputBrasileiro === 'function') {
@@ -113,9 +122,9 @@ const FeltroModule = {
             }
         });
     },
-    
+
     // Funções HTML
-    getPrecificacaoHTML: function() {
+    getPrecificacaoHTML: function () {
         return `
             <div id="precificacao-container">
                 <div class="mb-4">
@@ -158,8 +167,8 @@ const FeltroModule = {
             </div>
         `;
     },
-    
-    getQuantidadeFeltroHTML: function() {
+
+    getQuantidadeFeltroHTML: function () {
         return `
             <div id="quantidade-feltro-container">
                 <div class="mb-4">
@@ -207,8 +216,8 @@ const FeltroModule = {
             </div>
         `;
     },
-    
-    getConversorMedidasHTML: function() {
+
+    getConversorMedidasHTML: function () {
         return `
             <div id="conversor-medidas-container">
                 <div class="mb-3">
@@ -244,8 +253,8 @@ const FeltroModule = {
             </div>
         `;
     },
-    
-    getCalculadoraTempoHTML: function() {
+
+    getCalculadoraTempoHTML: function () {
         return `
             <div id="calculadora-tempo-container">
                 <div class="mb-3">
@@ -269,8 +278,8 @@ const FeltroModule = {
             </div>
         `;
     },
-    
-    getCalculadoraEnchimentoHTML: function() {
+
+    getCalculadoraEnchimentoHTML: function () {
         return `
             <div id="calculadora-enchimento-container">
                 <div class="mb-4">
@@ -311,8 +320,8 @@ const FeltroModule = {
             </div>
         `;
     },
-    
-    getCalculadoraPadraoHTML: function() {
+
+    getCalculadoraPadraoHTML: function () {
         return `
             <div id="calculadora-padrao-container">
                 <div class="mb-4">
@@ -351,8 +360,8 @@ const FeltroModule = {
             </div>
         `;
     },
-    
-    getGuiaPontosFeltroHTML: function() {
+
+    getGuiaPontosFeltroHTML: function () {
         return `
             <div id="guia-pontos-feltro-container">
                 <div class="mb-4">
@@ -368,6 +377,28 @@ const FeltroModule = {
                 </div>
 
                 <div id="conteudo-ponto-feltro"></div>
+            </div>
+        `;
+    },
+
+    getChecklistFeltroHTML: function () {
+        return `
+            <div id="checklist-feltro-container">
+                <div class="mb-4">
+                    <p class="text-muted">Selecione o tipo de projeto em feltro:</p>
+                    <select id="tipo-projeto-feltro" class="form-select mb-3">
+                        <option value="">Selecione...</option>
+                        <option value="bonecos">Bonecos e Personagens 3D</option>
+                        <option value="guirlandas">Guirlandas de Maternidade</option>
+                        <option value="lembrancinhas">Chaveiros e Lembrancinhas</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-calculate" onclick="gerarChecklistFeltro()">
+                    <i class="fas fa-list-check me-2"></i>Gerar Lista
+                </button>
+
+                <div id="resultado-checklist-feltro" class="mt-4"></div>
             </div>
         `;
     }

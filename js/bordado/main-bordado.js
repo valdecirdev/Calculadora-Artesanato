@@ -2,13 +2,13 @@
 
 const BordadoModule = {
     tools: {},
-    
-    init: function() {
+
+    init: function () {
         this.loadTools();
         this.setupEventListeners();
     },
-    
-    loadTools: function() {
+
+    loadTools: function () {
         this.tools = {
             'precificacao': {
                 id: 'precificacao',
@@ -69,11 +69,17 @@ const BordadoModule = {
                 title: 'Conversor entre Linhas',
                 content: this.getConversorLinhasHTML(),
                 module: 'bordado'
+            },
+            'checklist-projeto': {
+                id: 'checklist-projeto',
+                title: 'Checklist de Início de Projeto',
+                content: this.getChecklistProjetoHTML(),
+                module: 'bordado'
             }
         };
     },
-    
-    setupEventListeners: function() {
+
+    setupEventListeners: function () {
         const toolCards = document.querySelectorAll('.tool-card[data-module="bordado"]');
         toolCards.forEach(card => {
             card.addEventListener('click', (e) => {
@@ -84,9 +90,9 @@ const BordadoModule = {
             });
         });
     },
-    
-    initializeTool: function(toolName) {
-        switch(toolName) {
+
+    initializeTool: function (toolName) {
+        switch (toolName) {
             case 'precificacao':
                 if (typeof initPrecificacao === 'function') initPrecificacao();
                 break;
@@ -117,10 +123,13 @@ const BordadoModule = {
             case 'conversor-linhas':
                 if (typeof initConversorLinhas === 'function') initConversorLinhas();
                 break;
+            case 'checklist-projeto':
+                if (typeof initChecklistProjeto === 'function') initChecklistProjeto();
+                break;
         }
     },
-    
-    configurarInputs: function(toolName) {
+
+    configurarInputs: function (toolName) {
         const inputIds = {
             'precificacao': ['custo-insumos', 'custo-mao-obra', 'outros-custos', 'valor-metodo'],
             'custo-fio': ['tamanho-meada', 'quantidade-fios', 'preco-meada', 'comprimento-fio'],
@@ -129,7 +138,7 @@ const BordadoModule = {
             'calculadora-tecido': ['largura-tecido', 'altura-tecido', 'largura-peca', 'altura-peca', 'numero-camadas'],
             'calculadora-bastidor': ['diametro-bastidor', 'margem-trabalho-acabamento']
         };
-        
+
         const ids = inputIds[toolName] || [];
         ids.forEach(id => {
             if (typeof configurarInputBrasileiro === 'function') {
@@ -137,9 +146,9 @@ const BordadoModule = {
             }
         });
     },
-    
+
     // Funções HTML (copiadas do main.js original)
-    getPrecificacaoHTML: function() {
+    getPrecificacaoHTML: function () {
         return `
             <div id="precificacao-container">
                 <div class="mb-4">
@@ -182,8 +191,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getCustoFioHTML: function() {
+
+    getCustoFioHTML: function () {
         return `
             <div id="custo-fio-container">
                 <div class="mb-3">
@@ -211,8 +220,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getConversorMedidasHTML: function() {
+
+    getConversorMedidasHTML: function () {
         return `
             <div id="conversor-medidas-container">
                 <div class="mb-3">
@@ -248,8 +257,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getCalculadoraTempoHTML: function() {
+
+    getCalculadoraTempoHTML: function () {
         return `
             <div id="calculadora-tempo-container">
                 <div class="mb-3">
@@ -273,8 +282,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getCalculadoraTecidoHTML: function() {
+
+    getCalculadoraTecidoHTML: function () {
         return `
             <div id="calculadora-tecido-container">
                 <div class="mb-4">
@@ -322,8 +331,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getCalculadoraBastidorHTML: function() {
+
+    getCalculadoraBastidorHTML: function () {
         return `
             <div id="calculadora-bastidor-container">
                 <div class="mb-4">
@@ -352,8 +361,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getGuiaPontosHTML: function() {
+
+    getGuiaPontosHTML: function () {
         return `
             <div id="guia-pontos-container">
                 <div class="mb-4">
@@ -375,8 +384,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getConversorHexHTML: function() {
+
+    getConversorHexHTML: function () {
         return `
             <div id="conversor-hex-container">
                 <div class="mb-3">
@@ -401,8 +410,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getConversorRGBHTML: function() {
+
+    getConversorRGBHTML: function () {
         return `
             <div id="conversor-rgb-container">
                 <div class="mb-3">
@@ -434,8 +443,8 @@ const BordadoModule = {
             </div>
         `;
     },
-    
-    getConversorLinhasHTML: function() {
+
+    getConversorLinhasHTML: function () {
         return `
             <div id="conversor-linhas-container">
                 <div class="mb-3">
@@ -476,6 +485,28 @@ const BordadoModule = {
                 </button>
 
                 <div id="resultado-conversor-linhas"></div>
+            </div>
+        `;
+    },
+
+    getChecklistProjetoHTML: function () {
+        return `
+            <div id="checklist-projeto-container">
+                <div class="mb-4">
+                    <p class="text-muted">Selecione o tipo de projeto que você vai iniciar:</p>
+                    <select id="tipo-projeto" class="form-select mb-3">
+                        <option value="">Selecione...</option>
+                        <option value="bordado-livre">Bordado Livre em Bastidor</option>
+                        <option value="ponto-cruz">Ponto Cruz</option>
+                        <option value="roupas">Bordado em Roupas/Bonés</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-calculate" onclick="gerarChecklist()">
+                    <i class="fas fa-list-check me-2"></i>Gerar Lista
+                </button>
+
+                <div id="resultado-checklist" class="mt-4"></div>
             </div>
         `;
     }

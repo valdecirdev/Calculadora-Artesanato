@@ -248,6 +248,10 @@ configurarInputs: function(toolName) {
    - Referência de pontos de bordado
    - Inclui: Ponto Atrás, Cheio, Corrente, Haste, Nó Francês, Folha, Margarida, Cruz
 
+8. **Checklist de Início de Projeto** (`checklist-projeto.js`)
+   - Gera lista de materiais por tipo de projeto (Livre, Ponto Cruz, Roupas)
+   - Permite copiar a lista para área de transferência
+
 ### Módulo Feltro
 
 1. **Precificação** (`precificacao.js` - shared)
@@ -273,8 +277,12 @@ configurarInputs: function(toolName) {
    - Calcula escala de redimensionamento
 
 7. **Guia de Pontos para Feltro** (`guia-pontos-feltro.js`)
-   - Referência de pontos específicos para feltro
-   - Pontos: Invisível, Chuleado, Caseado, Palito, Espinha
+    - Referência de pontos específicos para feltro
+    - Pontos: Invisível, Chuleado, Caseado, Palito, Espinha
+
+8. **Checklist de Início de Projeto** (`checklist-feltro.js`)
+    - Gera lista de materiais para: Bonecos, Guirlandas, Lembrancinhas
+    - Permite copiar a lista para área de transferência
 
 ## Como Adicionar Nova Ferramenta
 
