@@ -62,39 +62,75 @@ function calcularCustoFio() {
         return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     };
     
+    // Calcular quantos fios podem ser feitos com a meada
+    const fiosPorMeada = (totalMetros * 100) / comprimentoFio;
+    
+    // Calcular custo por metro de fio
+    const custoPorMetroFio = custoPorFio / comprimentoMetros;
+    
     // Exibir resultados
     resultadoDiv.innerHTML = `
         <div class="result-card">
-            <h5><i class="fas fa-ruler me-2"></i>Resultado do Cálculo</h5>
+            <h5><i class="fas fa-ruler me-2"></i>Resultado do Cálculo de Custo por Fio</h5>
             
             <div class="mb-3">
                 <strong>Informações da Meada:</strong>
                 <div class="small mt-2">
-                    <div>Tamanho da meada: ${tamanhoMeada.toFixed(2).replace('.', ',')} metros</div>
-                    <div>Quantidade de fios: ${quantidadeFios}</div>
-                    <div>Preço da meada: ${formatarMoedaSimples(precoMeada)}</div>
+                    <div><i class="fas fa-ruler-vertical me-1"></i> Tamanho da meada: ${tamanhoMeada.toFixed(2).replace('.', ',')} metros</div>
+                    <div><i class="fas fa-layer-group me-1"></i> Quantidade de fios: ${quantidadeFios}</div>
+                    <div><i class="fas fa-tag me-1"></i> Preço da meada: ${formatarMoedaSimples(precoMeada)}</div>
                 </div>
             </div>
             
             <div class="mb-3">
                 <strong>Cálculos Intermediários:</strong>
                 <div class="small mt-2">
-                    <div>Total de metros na meada: ${totalMetros.toFixed(2).replace('.', ',')} metros</div>
-                    <div>Preço por metro: ${formatarMoeda(precoPorMetro)}</div>
-                    <div>Comprimento utilizado: ${comprimentoFio.toFixed(2).replace('.', ',')} cm (${comprimentoMetros.toFixed(2).replace('.', ',')} m)</div>
+                    <div><i class="fas fa-calculator me-1"></i> Total de metros na meada: ${totalMetros.toFixed(2).replace('.', ',')} metros</div>
+                    <div><i class="fas fa-dollar-sign me-1"></i> Preço por metro: ${formatarMoeda(precoPorMetro)}</div>
+                    <div><i class="fas fa-ruler me-1"></i> Comprimento utilizado: ${comprimentoFio.toFixed(2).replace('.', ',')} cm (${comprimentoMetros.toFixed(2).replace('.', ',')} m)</div>
                 </div>
             </div>
             
-            <div class="row">
-                <div class="col-12">
+            <div class="row mb-3">
+                <div class="col-md-6 mb-2">
                     <strong>Custo por Fio Utilizado:</strong>
-                    <div class="result-value">${formatarMoeda(custoPorFio)}</div>
+                    <div class="result-value text-success">${formatarMoeda(custoPorFio)}</div>
+                    <div class="small text-muted mt-1">
+                        Use este valor na precificação
+                    </div>
                 </div>
+                <div class="col-md-6 mb-2">
+                    <strong>Custo por Metro de Fio:</strong>
+                    <div class="result-value">${formatarMoeda(custoPorMetroFio)}</div>
+                    <div class="small text-muted mt-1">
+                        Custo por metro linear
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-chart-bar me-2"></i>
+                <strong>Análise de Aproveitamento:</strong>
+                <div class="small mt-2">
+                    <div>Com uma meada, você pode fazer aproximadamente <strong>${Math.floor(fiosPorMeada)}</strong> fios de ${comprimentoFio.toFixed(0)} cm.</div>
+                    <div>Isso representa um custo de <strong>${formatarMoeda(precoMeada / Math.floor(fiosPorMeada))}</strong> por fio quando compra a meada inteira.</div>
+                </div>
+            </div>
+            
+            <div class="mt-3">
+                <strong><i class="fas fa-lightbulb me-2"></i>Dicas Profissionais:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li><strong>Use este custo na precificação:</strong> Some o custo de todos os fios usados na peça ao custo total.</li>
+                    <li><strong>Compre meadas maiores:</strong> Geralmente meadas maiores têm melhor custo-benefício.</li>
+                    <li><strong>Controle o desperdício:</strong> Meça com precisão para não desperdiçar fio.</li>
+                    <li><strong>Considere cores especiais:</strong> Fios de cores raras ou especiais podem custar mais.</li>
+                    <li><strong>Dica:</strong> Se usar múltiplos fios na mesma agulha, multiplique o custo pelo número de fios.</li>
+                </ul>
             </div>
             
             <div class="mt-3 small text-muted">
                 <i class="fas fa-info-circle me-1"></i>
-                Cálculo: (Preço da meada ÷ Total de metros) × Comprimento utilizado
+                <strong>Fórmula:</strong> (Preço da meada ÷ Total de metros) × Comprimento utilizado
             </div>
         </div>
     `;

@@ -43,17 +43,47 @@ function converterMedida() {
     const valorFormatado = formatarNumero(valor);
     const valorConvertidoFormatado = formatarNumero(valorConvertido);
     
+    // Calcular diferença percentual (se aplicável)
+    const diferencaPercentual = ((valorConvertido - valor) / valor) * 100;
+    
     // Exibir resultado
     resultadoDiv.innerHTML = `
         <div class="result-card">
             <h5><i class="fas fa-exchange-alt me-2"></i>Resultado da Conversão</h5>
+            
             <div class="mb-3">
-                <div class="small text-muted mb-1">De:</div>
+                <div class="small text-muted mb-1">Valor Original:</div>
                 <div class="h5">${valorFormatado} ${getUnidadeNome(unidadeOrigem)}</div>
             </div>
+            
             <div class="mb-3">
-                <div class="small text-muted mb-1">Para:</div>
-                <div class="result-value">${valorConvertidoFormatado} ${getUnidadeNome(unidadeDestino)}</div>
+                <div class="small text-muted mb-1">Valor Convertido:</div>
+                <div class="result-value text-primary">${valorConvertidoFormatado} ${getUnidadeNome(unidadeDestino)}</div>
+            </div>
+            
+            ${Math.abs(diferencaPercentual) > 0.01 ? `
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                <small>
+                    Diferença: ${diferencaPercentual > 0 ? '+' : ''}${diferencaPercentual.toFixed(2).replace('.', ',')}%
+                    ${Math.abs(diferencaPercentual) > 10 ? ' (diferença significativa devido à conversão entre unidades)' : ''}
+                </small>
+            </div>
+            ` : ''}
+            
+            <div class="mt-3">
+                <strong><i class="fas fa-lightbulb me-2"></i>Quando Usar Cada Unidade:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li><strong>Milímetros (mm):</strong> Medidas muito precisas, espessuras, detalhes finos</li>
+                    <li><strong>Centímetros (cm):</strong> Medidas comuns em artesanato, dimensões de peças</li>
+                    <li><strong>Metros (m):</strong> Medidas grandes, comprimento de tecidos, espaços</li>
+                    <li><strong>Polegadas (pol):</strong> Padrões internacionais, alguns padrões de bordado (1 pol = 2,54 cm)</li>
+                </ul>
+            </div>
+            
+            <div class="mt-3 small text-muted">
+                <i class="fas fa-info-circle me-1"></i>
+                <strong>Conversão:</strong> 1 metro = 100 cm = 1.000 mm = 39,37 polegadas
             </div>
         </div>
     `;

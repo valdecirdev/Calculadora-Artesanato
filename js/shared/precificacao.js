@@ -96,46 +96,115 @@ function calcularPrecificacao() {
         return valor.toFixed(2).replace('.', ',') + '%';
     };
     
+    // Determinar método usado para exibição
+    let metodoTexto = '';
+    let explicacaoMetodo = '';
+    switch(metodo) {
+        case 'markup':
+            metodoTexto = 'Mark-up';
+            explicacaoMetodo = `Você definiu um multiplicador de ${valorMetodo.toFixed(2).replace('.', ',')}x sobre o custo total.`;
+            break;
+        case 'margem':
+            metodoTexto = 'Margem de Lucro';
+            explicacaoMetodo = `Você definiu uma margem de lucro de ${formatarPercentual(valorMetodo)} sobre o preço de venda.`;
+            break;
+        case 'preco-mercado':
+            metodoTexto = 'Preço de Mercado';
+            explicacaoMetodo = `Você definiu o preço de venda baseado no mercado: ${formatarMoeda(valorMetodo)}.`;
+            break;
+    }
+    
+    // Análise de viabilidade
+    let analiseViabilidade = '';
+    let classeViabilidade = '';
+    if (margemLucro < 20) {
+        analiseViabilidade = 'Margem baixa. Considere revisar custos ou aumentar o preço.';
+        classeViabilidade = 'warning';
+    } else if (margemLucro < 40) {
+        analiseViabilidade = 'Margem adequada para produtos artesanais.';
+        classeViabilidade = 'info';
+    } else {
+        analiseViabilidade = 'Excelente margem de lucro!';
+        classeViabilidade = 'success';
+    }
+    
     // Exibir resultados
     resultadoDiv.innerHTML = `
         <div class="result-card">
             <h5><i class="fas fa-chart-line me-2"></i>Resultados da Precificação</h5>
             
+            <div class="alert alert-info mb-3">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Método utilizado:</strong> ${metodoTexto}<br>
+                <small>${explicacaoMetodo}</small>
+            </div>
+            
             <div class="row mb-3">
                 <div class="col-md-6 mb-2">
                     <strong>Custo Total:</strong>
                     <div class="result-value">${formatarMoeda(custoTotal)}</div>
+                    <div class="small text-muted mt-1">
+                        Soma de todos os custos do produto
+                    </div>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <strong>Preço de Venda:</strong>
-                    <div class="result-value">${formatarMoeda(precoVenda)}</div>
+                    <strong>Preço de Venda Sugerido:</strong>
+                    <div class="result-value text-primary">${formatarMoeda(precoVenda)}</div>
+                    <div class="small text-muted mt-1">
+                        Preço final para o cliente
+                    </div>
                 </div>
             </div>
             
             <div class="row mb-3">
                 <div class="col-md-6 mb-2">
-                    <strong>Lucro:</strong>
+                    <strong>Lucro Bruto:</strong>
                     <div class="result-value text-success">${formatarMoeda(lucro)}</div>
+                    <div class="small text-muted mt-1">
+                        Diferença entre venda e custo
+                    </div>
                 </div>
                 <div class="col-md-6 mb-2">
                     <strong>Margem de Lucro:</strong>
                     <div class="result-value text-success">${formatarPercentual(margemLucro)}</div>
+                    <div class="small text-muted mt-1">
+                        Percentual de lucro sobre o preço de venda
+                    </div>
                 </div>
             </div>
             
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-md-6 mb-2">
-                    <strong>Mark-up:</strong>
+                    <strong>Mark-up Aplicado:</strong>
                     <div class="result-value">${markup.toFixed(2).replace('.', ',')}x</div>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <strong>Detalhamento:</strong>
-                    <div class="small">
-                        <div>Insumos: ${formatarMoeda(custoInsumos)}</div>
-                        <div>Mão de Obra: ${formatarMoeda(custoMaoObra)}</div>
-                        ${outrosCustos > 0 ? `<div>Outros: ${formatarMoeda(outrosCustos)}</div>` : ''}
+                    <div class="small text-muted mt-1">
+                        Multiplicador sobre o custo total
                     </div>
                 </div>
+                <div class="col-md-6 mb-2">
+                    <strong>Detalhamento de Custos:</strong>
+                    <div class="small mt-2">
+                        <div><i class="fas fa-box me-1"></i> Insumos: ${formatarMoeda(custoInsumos)}</div>
+                        <div><i class="fas fa-user me-1"></i> Mão de Obra: ${formatarMoeda(custoMaoObra)}</div>
+                        ${outrosCustos > 0 ? `<div><i class="fas fa-ellipsis-h me-1"></i> Outros: ${formatarMoeda(outrosCustos)}</div>` : ''}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-${classeViabilidade} mt-3">
+                <i class="fas fa-chart-pie me-2"></i>
+                <strong>Análise de Viabilidade:</strong> ${analiseViabilidade}
+            </div>
+            
+            <div class="mt-3">
+                <strong><i class="fas fa-lightbulb me-2"></i>Dicas Profissionais:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li><strong>Mark-up:</strong> Multiplicador simples sobre o custo. Ex: 2,5x significa que você vende por 2,5 vezes o custo.</li>
+                    <li><strong>Margem:</strong> Percentual de lucro sobre o preço final. Mais preciso para análise financeira.</li>
+                    <li><strong>Preço de Mercado:</strong> Baseado na concorrência. Verifique se cobre seus custos e gera lucro adequado.</li>
+                    <li>Para artesanato, margens entre 40-60% são comuns e saudáveis.</li>
+                    <li>Lembre-se de incluir todos os custos: materiais, tempo, embalagem, marketing, etc.</li>
+                </ul>
             </div>
         </div>
     `;

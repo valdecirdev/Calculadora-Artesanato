@@ -101,9 +101,34 @@ function converterLinhas() {
     html += `
                 </div>
             </div>
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Como interpretar os resultados:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li><strong>Distância:</strong> Mede a diferença entre a cor original (${origem.marca} ${origem.codigo}) e a cor equivalente. Quanto menor, mais próxima.</li>
+                    <li><strong>Distância 0-10:</strong> Cor quase idêntica, excelente correspondência.</li>
+                    <li><strong>Distância 10-30:</strong> Cor muito próxima, boa correspondência.</li>
+                    <li><strong>Distância 30-50:</strong> Cor similar, pode funcionar dependendo do projeto.</li>
+                    <li><strong>Distância >50:</strong> Cor diferente, considere outras opções ou marcas.</li>
+                </ul>
+            </div>
+            
+            <div class="mt-3">
+                <strong><i class="fas fa-lightbulb me-2"></i>Dicas para Escolher a Cor Equivalente:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li>A primeira cor (marcada em verde) é a <strong>mais próxima</strong> da cor original.</li>
+                    <li>Compare visualmente as cores usando os previews para ver qual combina melhor com seu projeto.</li>
+                    <li>Se a primeira opção estiver descontinuada (Anchor), a segunda opção geralmente é uma boa alternativa.</li>
+                    <li>Considere a disponibilidade: verifique se a cor está disponível na sua região antes de comprar.</li>
+                    <li>Para projetos grandes, teste a cor em um pedaço de tecido antes de comprar grandes quantidades.</li>
+                    <li>Lembre-se: cores podem parecer diferentes sob diferentes iluminações. Teste em condições similares ao uso final.</li>
+                </ul>
+            </div>
+            
             <div class="mt-3 small text-muted">
                 <i class="fas fa-info-circle me-1"></i>
-                As cores são ordenadas por proximidade. A primeira é a mais próxima da cor original.
+                As cores são ordenadas por proximidade. A primeira é a mais próxima da cor original (${origem.marca} ${origem.codigo}).
             </div>
         </div>
     `;

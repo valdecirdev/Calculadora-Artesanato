@@ -128,6 +128,36 @@ function calcularTecido() {
                     Não é possível fazer nenhuma peça com essas dimensões. O tecido é menor que o necessário ou o número de camadas é muito alto.
                 </div>
             ` : ''}
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-lightbulb me-2"></i>
+                <strong>Dicas de Otimização:</strong>
+                <ul class="small mt-2 mb-0">
+                    ${percentualDesperdicio > 20 ? `
+                    <li class="text-warning"><strong>Atenção:</strong> Você está desperdiçando ${formatarNumero(percentualDesperdicio)}% do tecido. Considere:</li>
+                    <li>• Ajustar o tamanho das peças para melhor aproveitamento</li>
+                    <li>• Usar retalhos para peças menores</li>
+                    <li>• Planejar o corte antes de começar</li>
+                    ` : `
+                    <li class="text-success"><strong>Ótimo aproveitamento!</strong> Você está desperdiçando apenas ${formatarNumero(percentualDesperdicio)}% do tecido.</li>
+                    `}
+                    <li><strong>Planejamento:</strong> Desenhe um layout no papel antes de cortar para visualizar o melhor aproveitamento.</li>
+                    <li><strong>Orientacao:</strong> Considere girar as peças (largura x altura) para ver se cabe mais peças.</li>
+                    <li><strong>Retalhos:</strong> Guarde os retalhos para projetos menores ou aplicações.</li>
+                    <li><strong>Margem de costura:</strong> Lembre-se de adicionar margem de costura se necessário (geralmente 0,5-1 cm).</li>
+                </ul>
+            </div>
+            
+            <div class="mt-3">
+                <strong><i class="fas fa-calculator me-2"></i>Informações Adicionais:</strong>
+                <div class="small mt-2">
+                    <div>Você pode fazer <strong>${totalPecasComCamadas}</strong> peça${totalPecasComCamadas !== 1 ? 's' : ''} completa${totalPecasComCamadas !== 1 ? 's' : ''} com ${numeroCamadas} camada${numeroCamadas !== 1 ? 's' : ''} cada.</div>
+                    <div>Área utilizada: <strong>${formatarNumero(areaUtilizada)} cm²</strong> de ${formatarNumero(areaTecido)} cm² disponíveis.</div>
+                    ${pecasPorLargura > 0 && pecasPorAltura > 0 ? `
+                    <div>Layout sugerido: <strong>${pecasPorLargura}</strong> peças na largura × <strong>${pecasPorAltura}</strong> peças na altura.</div>
+                    ` : ''}
+                </div>
+            </div>
         </div>
     `;
 }

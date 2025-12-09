@@ -88,9 +88,33 @@ function converterHex() {
     
     html += `
             </div>
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Como interpretar os resultados:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li><strong>Distância:</strong> Mede a diferença entre a cor original e a cor da linha. Quanto menor, mais próxima.</li>
+                    <li><strong>Distância 0-10:</strong> Cor quase idêntica, excelente correspondência.</li>
+                    <li><strong>Distância 10-30:</strong> Cor muito próxima, boa correspondência.</li>
+                    <li><strong>Distância 30-50:</strong> Cor similar, pode funcionar dependendo do projeto.</li>
+                    <li><strong>Distância >50:</strong> Cor diferente, considere outras opções.</li>
+                </ul>
+            </div>
+            
+            <div class="mt-3">
+                <strong><i class="fas fa-lightbulb me-2"></i>Dicas para Escolher a Cor:</strong>
+                <ul class="small mt-2 mb-0">
+                    <li>Sempre escolha a cor com <strong>menor distância</strong> para melhor correspondência.</li>
+                    <li>Compare visualmente as cores usando os previews ao lado de cada código.</li>
+                    <li>Considere o contexto: para detalhes pequenos, use a cor mais próxima. Para áreas grandes, pequenas diferenças podem ser aceitáveis.</li>
+                    <li>Se a primeira opção estiver descontinuada (Anchor), considere a segunda opção disponível.</li>
+                    <li>Teste a cor em um pedaço de tecido antes de usar no projeto final.</li>
+                </ul>
+            </div>
+            
             <div class="mt-3 small text-muted">
                 <i class="fas fa-info-circle me-1"></i>
-                As cores são ordenadas por proximidade (menor distância = mais próxima)
+                As cores são ordenadas por proximidade (menor distância = mais próxima). A primeira cor de cada marca é a melhor correspondência.
             </div>
         </div>
     `;
