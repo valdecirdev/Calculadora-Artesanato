@@ -93,6 +93,12 @@ const BordadoModule = {
                 title: 'Guia de Cuidados',
                 content: this.getGuiaCuidadosHTML(),
                 module: 'bordado'
+            },
+            'guia-direitos': {
+                id: 'guia-direitos',
+                title: 'Guia de Direitos Autorais e Imagem',
+                content: this.getGuiaDireitosHTML(),
+                module: 'bordado'
             }
         };
     },
@@ -152,6 +158,9 @@ const BordadoModule = {
                 break;
             case 'guia-cuidados':
                 if (typeof initGuiaCuidados === 'function') initGuiaCuidados();
+                break;
+            case 'guia-direitos':
+                if (typeof initGuiaDireitos === 'function') initGuiaDireitos();
                 break;
         }
     },
@@ -641,6 +650,13 @@ const BordadoModule = {
     getGuiaCuidadosHTML: function () {
         if (typeof getGuiaCuidadosHTML === 'function') {
             return getGuiaCuidadosHTML();
+        }
+        return '<p>Erro ao carregar ferramenta.</p>';
+    },
+
+    getGuiaDireitosHTML: function () {
+        if (typeof getGuiaDireitosHTML === 'function') {
+            return getGuiaDireitosHTML();
         }
         return '<p>Erro ao carregar ferramenta.</p>';
     }

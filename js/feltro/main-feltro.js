@@ -69,6 +69,12 @@ const FeltroModule = {
                 title: 'Guia de Cuidados',
                 content: this.getGuiaCuidadosFeltroHTML(),
                 module: 'feltro'
+            },
+            'guia-direitos': {
+                id: 'guia-direitos',
+                title: 'Guia de Direitos Autorais e Imagem',
+                content: this.getGuiaDireitosHTML(),
+                module: 'feltro'
             }
         };
     },
@@ -119,6 +125,9 @@ const FeltroModule = {
                 break;
             case 'guia-cuidados-feltro':
                 if (typeof initGuiaCuidadosFeltro === 'function') initGuiaCuidadosFeltro();
+                break;
+            case 'guia-direitos':
+                if (typeof initGuiaDireitos === 'function') initGuiaDireitos();
                 break;
         }
     },
@@ -451,6 +460,13 @@ const FeltroModule = {
     getGuiaCuidadosFeltroHTML: function () {
         if (typeof getGuiaCuidadosFeltroHTML === 'function') {
             return getGuiaCuidadosFeltroHTML();
+        }
+        return '<p>Erro ao carregar ferramenta.</p>';
+    },
+
+    getGuiaDireitosHTML: function () {
+        if (typeof getGuiaDireitosHTML === 'function') {
+            return getGuiaDireitosHTML();
         }
         return '<p>Erro ao carregar ferramenta.</p>';
     }
