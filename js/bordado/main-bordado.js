@@ -87,6 +87,12 @@ const BordadoModule = {
                 title: 'Gerador de Paleta de Cores',
                 content: this.getPaletaCoresHTML(),
                 module: 'bordado'
+            },
+            'guia-cuidados': {
+                id: 'guia-cuidados',
+                title: 'Guia de Cuidados',
+                content: this.getGuiaCuidadosHTML(),
+                module: 'bordado'
             }
         };
     },
@@ -143,6 +149,9 @@ const BordadoModule = {
                 break;
             case 'paleta-cores':
                 if (typeof initPaletaCores === 'function') initPaletaCores();
+                break;
+            case 'guia-cuidados':
+                if (typeof initGuiaCuidados === 'function') initGuiaCuidados();
                 break;
         }
     },
@@ -627,6 +636,13 @@ const BordadoModule = {
                 <div id="resultado-paleta" class="mt-4"></div>
             </div>
         `;
+    },
+
+    getGuiaCuidadosHTML: function () {
+        if (typeof getGuiaCuidadosHTML === 'function') {
+            return getGuiaCuidadosHTML();
+        }
+        return '<p>Erro ao carregar ferramenta.</p>';
     }
 };
 

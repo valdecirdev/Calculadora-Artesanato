@@ -63,6 +63,12 @@ const FeltroModule = {
                 title: 'Gerador de Paleta de Cores',
                 content: this.getPaletaCoresHTML(),
                 module: 'feltro'
+            },
+            'guia-cuidados-feltro': {
+                id: 'guia-cuidados-feltro',
+                title: 'Guia de Cuidados',
+                content: this.getGuiaCuidadosFeltroHTML(),
+                module: 'feltro'
             }
         };
     },
@@ -110,6 +116,9 @@ const FeltroModule = {
                 break;
             case 'paleta-cores':
                 if (typeof initPaletaCores === 'function') initPaletaCores();
+                break;
+            case 'guia-cuidados-feltro':
+                if (typeof initGuiaCuidadosFeltro === 'function') initGuiaCuidadosFeltro();
                 break;
         }
     },
@@ -437,6 +446,13 @@ const FeltroModule = {
     getPaletaCoresHTML: function () {
         // Reusa a mesma estrutura do bordado
         return BordadoModule.getPaletaCoresHTML();
+    },
+
+    getGuiaCuidadosFeltroHTML: function () {
+        if (typeof getGuiaCuidadosFeltroHTML === 'function') {
+            return getGuiaCuidadosFeltroHTML();
+        }
+        return '<p>Erro ao carregar ferramenta.</p>';
     }
 };
 
